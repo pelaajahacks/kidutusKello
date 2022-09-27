@@ -1,0 +1,7 @@
+09:00:00$Koksan|9:45:00$Valkka|10:05:00$Koksan|11:40:00$Valkka|12:00:00$Ruokailu|12:20:00$Englannin|13:05:00$Valkka|13:25:00$Matikan|14:10:00$Valkka|14:15:00$Historian|15:00:00
+09:00:00$Biologian|09:45:00$Valkka|10:05:00$Kuviksen|12:00:00$Ruokailu|12:20:00$Ruotsin|13:05:00$Valkka|13:25:00$Kemian|15:00:00
+09:00:00$Matikan|09:45:00$Valkka|10:05:00$Englannin|10:50:00$Valkka|10:55:00$Uskonnon|11:40:00$Ruokailu|12:00:00$Valkka|12:20:00$ICT|13:05:00
+00:31:20|08:10:00$Matikan|8:55:00$Valkka|9:00:00$Matikan|09:45:00$Valkka|10:05:00$Ilmaisu Taidon|10:50:00$Valkka|11:10:00$Ruokailu|11:30:00$Kasityon|13:05:00$Valkka|13:25:00$Liikunnan|15:00:00|19:28:20
+08:10:00$Musiikin|09:45:00$Valkka|10:05:00$Uskonnon|10:50:00$Ruokailu|11:10:00$Valkka|11:30:00$Ruotsin|12:15:00$Valkka|12:20:00$Englannin|13:05:00$Valkka|13:25:00$Biologian|14:10:00$Valkka|14:15:00$Historian|15:00:00
+00:00:00
+00:00:00

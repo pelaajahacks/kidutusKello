@@ -1,0 +1,9 @@
+{
+    "textColor": "240, 240, 240",
+    "bgColor": "33, 33, 33",
+    "font": "PUSAB.otf",
+    "bgImage": "images/wallpaper/lol.png",
+    "idk": "0",
+    "getImgFromInternet": false,
+    "imgUrl": "google.com"
+}
