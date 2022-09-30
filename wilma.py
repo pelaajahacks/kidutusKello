@@ -228,7 +228,7 @@ def schedule_dingong(param=None):
             aineet.append(aine) 
             groupids.append(groupid)
         
-        if paiva == paivat[day + 1]:
+        if paiva == paivat[day] or paiva == paivat[day + 1]:
             tomorrows_classes.append(aine)
         
         print(tomorrows_classes)

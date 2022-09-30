@@ -335,7 +335,7 @@ def lukemisKello():
     for homework in laksyt["laksyt"]:
         
         if homework["aine"] in laksyt["huomisen_tunnit"]:
-            if (datetime.strptime(homework["paivamaara"], "%d.%m.%Y") - datetime.strptime(currdate, "%d.%m.%Y")).days == 0 and (datetime.strptime(homework["paivamaara"], "%d.%m.%Y") - datetime.strptime(currdate, "%d.%m.%Y")).days < 7:
+            if (datetime.strptime(homework["paivamaara"], "%d.%m.%Y") - datetime.strptime(currdate, "%d.%m.%Y")).days == -1 and (datetime.strptime(homework["paivamaara"], "%d.%m.%Y") - datetime.strptime(currdate, "%d.%m.%Y")).days < 2:
                 ok += 1
                 aine = homework["aine"]
                 paivamaara = homework["paivamaara"]
