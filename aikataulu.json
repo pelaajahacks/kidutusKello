@@ -1,0 +1,218 @@
+{
+    "schedule": [
+        [
+            {
+                "tunninalku": "8:10:00",
+                "tunti": "Y_SUSuomenkielijakirjallisuus"
+            },
+            {
+                "tunninalku": "8:55:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "9:00:00",
+                "tunti": "Y_ENA1Englanti,A1"
+            },
+            {
+                "tunninalku": "9:45:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "10:05:00",
+                "tunti": "Y_BIBiologia"
+            },
+            {
+                "tunninalku": "11:40:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "12:20:00",
+                "tunti": "Y_RUB1Ruotsinkieli,B1"
+            },
+            {
+                "tunninalku": "13:05:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "13:25:00",
+                "tunti": "Y_MAMatematiikka"
+            },
+            {
+                "tunninalku": "15:00:00",
+                "tunti": "Kotiin!"
+            }
+        ],
+        [
+            {
+                "tunninalku": "9:00:00",
+                "tunti": "Y_SUSuomenkielijakirjallisuus"
+            },
+            {
+                "tunninalku": "10:50:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "10:55:00",
+                "tunti": "Y_HIHistoria"
+            },
+            {
+                "tunninalku": "11:40:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "12:20:00",
+                "tunti": "Y_RUB1Ruotsinkieli,B1"
+            },
+            {
+                "tunninalku": "13:05:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "13:25:00",
+                "tunti": "Y_LILiikunta"
+            },
+            {
+                "tunninalku": "15:00:00",
+                "tunti": "Kotiin!"
+            }
+        ],
+        [
+            {
+                "tunninalku": "9:00:00",
+                "tunti": "Y_vKOKotitalousvalinnainenpitka"
+            },
+            {
+                "tunninalku": "9:45:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "9:45:00",
+                "tunti": "Unknown. Mahdollisesti lv-tuokio?"
+            },
+            {
+                "tunninalku": "10:05:00",
+                "tunti": "Y_vKOKotitalousvalinnainenpitka"
+            },
+            {
+                "tunninalku": "10:50:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "10:55:00",
+                "tunti": "Y_BIBiologia"
+            },
+            {
+                "tunninalku": "11:40:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "12:20:00",
+                "tunti": "Y_SUSuomenkielijakirjallisuus"
+            },
+            {
+                "tunninalku": "13:05:00",
+                "tunti": "Kotiin!"
+            }
+        ],
+        [
+            {
+                "tunninalku": "8:10:00",
+                "tunti": "Y_HIHistoria"
+            },
+            {
+                "tunninalku": "8:55:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "9:00:00",
+                "tunti": "Y_ENA1Englanti,A1"
+            },
+            {
+                "tunninalku": "9:45:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "10:05:00",
+                "tunti": "Y_MAMatematiikka"
+            },
+            {
+                "tunninalku": "10:50:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "11:30:00",
+                "tunti": "Y_KEKemia"
+            },
+            {
+                "tunninalku": "13:05:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "13:25:00",
+                "tunti": "Y_SUSuomenkielijakirjallisuus"
+            },
+            {
+                "tunninalku": "14:10:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "14:15:00",
+                "tunti": "Y_BIBiologia"
+            },
+            {
+                "tunninalku": "15:00:00",
+                "tunti": "Kotiin!"
+            }
+        ],
+        [
+            {
+                "tunninalku": "8:10:00",
+                "tunti": "Y_vILVIlmaisutaito"
+            },
+            {
+                "tunninalku": "9:45:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "10:05:00",
+                "tunti": "Y_ENA1Englanti,A1"
+            },
+            {
+                "tunninalku": "10:50:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "11:30:00",
+                "tunti": "Y_xILIlmaisutaito"
+            },
+            {
+                "tunninalku": "12:15:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "12:20:00",
+                "tunti": "Y_HIHistoria"
+            },
+            {
+                "tunninalku": "13:05:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "13:25:00",
+                "tunti": "Y_vICTInformaatioteknologia"
+            },
+            {
+                "tunninalku": "14:10:00",
+                "tunti": "Valitunti"
+            },
+            {
+                "tunninalku": "14:15:00",
+                "tunti": "Y_MAMatematiikka"
+            },
+            {
+                "tunninalku": "15:00:00",
+                "tunti": "Kotiin!"
+            }
+        ]
+    ]
+}

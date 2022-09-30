@@ -8,6 +8,10 @@ import os
 import requests
 import shutil
 import json
+import wilma
+
+#wilma.auth()
+#wilma.get_schedule()
 
 pygame.init()
 pygame.font.init()
@@ -15,16 +19,17 @@ pygame.font.init()
 pygame.display.set_caption('KIDUTUS KELLO!!!')
 with open("config.json", "r") as file:
     filecontent = file.read()
-
     config = json.loads(filecontent)
+with open("homework.json", "r") as file:
+    laksyt = json.loads(file.read())
+
+    
 
 screen = pygame.display.set_mode((1500, 1080), pygame.RESIZABLE)
 clock = pygame.time.Clock()
 
 
-song = pygame.mixer.Sound("Sounds/TheFinalCountdown.wav")
-breaktime_sound = pygame.mixer.Sound("Sounds/breaktime.wav")
-breaktime_end = pygame.mixer.Sound("Sounds/studytime.wav")
+beep = pygame.mixer.Sound("Sounds/boom.mp3")
 
 
 clocktick = 5
@@ -37,13 +42,55 @@ kidutuskello = True
 lukemiskello = False
 normikello = False
 
+with open("aikataulu.json", "r") as file:
+    aikataulu = json.loads(file.read())
+
 # different screens
+
+def renderTextCenteredAt(text, font, colour, x, y, screen, allowed_width):
+    # first, split the text into words
+    words = text.split()
+
+    # now, construct lines out of these words
+    lines = []
+    while len(words) > 0:
+        # get as many words as will fit within allowed_width
+        line_words = []
+        while len(words) > 0:
+            line_words.append(words.pop(0))
+            fw, fh = font.size(' '.join(line_words + words[:1]))
+            if fw > allowed_width:
+                break
+
+        # add a line consisting of those words
+        line = ' '.join(line_words)
+        lines.append(line)
+
+    # now we've split our text into lines that fit into the width, actually
+    # render them
+
+    # we'll render each line below the last, so we need to keep track of
+    # the culmative height of the lines we've rendered so far
+    y_offset = 0
+    y_margin = 5
+    for line in lines:
+        fw, fh = font.size(line)
+
+        # (tx, ty) is the top-left of the font surface
+        tx = x - fw / 2
+        ty = y + y_offset
+
+        font_surface = font.render(line, True, colour)
+        font_surface_rect = font_surface.get_rect(topleft=(tx, ty))
+        screen.blit(font_surface, font_surface_rect)
+        #pygame.display.update(objects_to_update)
+
+        y_offset += fh + y_margin
+
 def kidutusKello():
-    global timedingdong2, timedingdong, backround, frames, config
-    fontsize = ((screen.get_width()) // 100) + \
-        ((screen.get_height() // 100)) * 15
-    fontsize1 = ((screen.get_width()) // 100) + \
-        ((screen.get_height() // 100)) * 5
+    global timedingdong2, timedingdong, backround, frames, config, aikataulu
+    fontsize = ((screen.get_width()) // 100) * ((screen.get_height() // 100)) - 25
+    fontsize1 = (((screen.get_width()) // 100) * ((screen.get_height() // 100)) * 10) // 25
     timedingdong2 += 1
 
     if timedingdong2 >= timedingdong:
@@ -83,46 +130,32 @@ def kidutusKello():
     
 
     
-    with open("aikataulu.txt", "r") as file:
-        filecontent1 = file.read()
 
-        filecontent1 = filecontent1.split("\n")
 
-    times = []
+
     kidutus = "Koulu"
-    x = filecontent1[day]
-    x = x.split("|")
-    daything = x[0]
-    for i in x:
-        if i != "":
-            i = i.split("$")
-            i1 = i
-            i = i[0]
+    x = aikataulu["schedule"]
+    aikataulupaivan = x[day]
+    print(aikataulupaivan)
 
-            i2 = i.replace(":", "")
-            currtime22 = currtime.replace(":", "")
-            if int(i2) - int(currtime22) > 0:
-                times.append(str(i2) + "$" + kidutus)
-                break
-            try:
-                kidutus = i1[1]
-            except BaseException:
-                pass
+    for count, aikat in enumerate(aikataulupaivan):
+        kidutus = aikataulupaivan[count-1]["tunti"]
+        timestime = aikat["tunninalku"]
+        
+        time_1 = datetime.strptime(timestime, "%H:%M:%S")
+        time_2 = datetime.strptime(currtime, "%H:%M:%S")
+        
+        currtime22 = int(currtime.replace(":", ""))
+        i2 = int(timestime.replace(":", ""))
+        
+        if i2 - currtime22 > 0:
+            print(i2 - currtime22)
+            break
+            
+        else:
+            
+            pass
 
-    times.sort()
-    try:
-        i = times[0]
-        i = i.split("$")
-        kidutus = i[1]
-        timestime = i[0]
-
-        timeshour = timestime[:2]
-        timesminute = timestime[2:4]
-        timessecond = timestime[4:6]
-
-        timestime = timeshour + ":" + timesminute + ":" + timessecond
-    except BaseException:
-        pass
     try:
         time_1 = datetime.strptime(timestime, "%H:%M:%S")
         time_2 = datetime.strptime(currtime, "%H:%M:%S")
@@ -133,7 +166,7 @@ def kidutusKello():
         pass
     try:
         def convert(sec):
-            global hours, minutes, seconds
+            
             sec = sec % (24 * 3600)
             hours = sec // 3600
             sec %= 3600
@@ -141,9 +174,9 @@ def kidutusKello():
 
             sec %= 60
             seconds = sec
-
-        if int(i2) - int(currtime22) > 0:
-            convert(int(tdelta))
+            return hours, minutes, seconds
+        
+        hours, minutes, seconds = convert(int(tdelta))
     except Exception as e:
         print(e)
         pass
@@ -160,29 +193,17 @@ def kidutusKello():
         else:
             minutes = ""
             minutetext = ""
-        if seconds:
-            if int(i2) - int(currtime22) > 0:
-                tuntiloppuusurface = myfont.render(
-                    str(hours) + str(hourtext) + str(minutes) + str(minutetext) + str(seconds) + "S!", False,
-                    tuple(map(int, config["textColor"].split(', '))))
-
-        try:
-            if seconds == 46:
-                if not minutes:
-                    if not songplaying:
-                        if song:
-                            songplaying = True
-                            song.play()
-                            print("Playing!")
-            else:
-                songplaying = False
-        except BaseException:
-            pass
+        
+        if int(i2) - int(currtime22) > 0:
+            tuntiloppuusurface = myfont.render(
+                str(hours) + str(hourtext) + str(minutes) + str(minutetext) + str(seconds) + "S!", False,
+                tuple(map(int, config["textColor"].split(', '))))
 
         if seconds <= 1:
             pass
 
-    except BaseException:
+    except BaseException as e:
+        print(e)
         pass
     currtimesurface_rect = currtimesurface.get_rect(center=(
         (screen.get_width() / 2) / 1.25, screen.get_height() / 2 - 80 * (fontsize / 50)))
@@ -190,10 +211,10 @@ def kidutusKello():
         center=((screen.get_width() / 2) / 1.25, screen.get_height() / 2 - 50))
     try:
         tuntiloppuusurface_rect = tuntiloppuusurface.get_rect(
-            center=(screen.get_width() / 2, screen.get_height() / 2 + 220))
+            center=((screen.get_width() / 2) / 1.25, screen.get_height() / 1.2))
 
         if minutes:
-            if seconds > 10:
+            if seconds > -1:
                 if kidutus.lower() == "valkka" or kidutus.lower() == "ruokailu":
                     kidutussurface = myfont1.render(str(kidutus) + " Nauttimus loppuu:",
                                                     False, tuple(map(int, config["textColor"].split(', '))))
@@ -202,14 +223,13 @@ def kidutusKello():
                         "Pasin jumaluus loppuu:", False, tuple(map(int, config["textColor"].split(', '))))
 
                 else:
-                    kidutussurface = myfont1.render(str(kidutus) + " Kidutus loppuu:",
-                                                    False, tuple(map(int, config["textColor"].split(', '))))
+                    renderTextCenteredAt(str(kidutus) + " Opintokokemus loppuu:", myfont1, tuple(map(int, config["textColor"].split(', '))), (screen.get_width() / 2) / 1.25, screen.get_height()/1.7, screen, screen.get_width()-10)
 
     except BaseException:
         pass
     try:
         kidutussurface_rect = kidutussurface.get_rect(
-            center=(screen.get_width() / 2, screen.get_height() / 2 + 75))
+            center=((screen.get_width() / 2) / 1.25, screen.get_height() / 2 + 75))
     except BaseException:
         pass
 
@@ -225,17 +245,14 @@ def kidutusKello():
                 else:
                     if seconds > 2:
                         if (frames // 2) % 2 == 0:
-                            blinkingsurface = myfont.render("TUNTI LOPPUI!", False, tuple(map(
+                            blinkingsurface = myfont.render("Opintokokemus loppui :(", False, tuple(map(
                                 int, (random.randint(1, 255), random.randint(1, 255), random.randint(1, 255)))))
                             blinkingsurface_rect = blinkingsurface.get_rect(
-                                center=(screen.get_width() / 2, screen.get_height() / 2 + 220))
+                                center=(screen.get_width() / 2, screen.get_height() / 1.7 + 220))
 
                             screen.blit(blinkingsurface, blinkingsurface_rect)
-                    else:
-                        song.stop()
             else:
                 if seconds:
-                    song.stop()
                     screen.blit(tuntiloppuusurface, tuntiloppuusurface_rect)
 
                     screen.blit(kidutussurface, kidutussurface_rect)
@@ -260,20 +277,21 @@ def lukemisKello():
             
             return f"{hours:02}:{minutes:02}:{seconds:02}"
     
-    
-    global backroundpic, config, timestarted, breaktime
+    tz = pytz.timezone('Europe/Helsinki')
+    global backroundpic, config, timestarted, beep, breaktime, laksyt
     backroundpic = config["bgImage"]
-    fontsize = ((screen.get_width()) // 100) + \
-        ((screen.get_height() // 100)) * 15
-    fontsize1 = ((screen.get_width()) // 100) + \
-        ((screen.get_height() // 100)) * 5
+    fontsize = ((screen.get_width()) // 100) * ((screen.get_height() // 100))
+    fontsize1 = ((screen.get_width()) // 100) + ((screen.get_height() // 100)) * 5
+    fontsize2 = ((screen.get_width()) // 100) + ((screen.get_height() // 100)) * 2
     
     try:
         myfont = pygame.font.Font('fonts/' + config["font"], fontsize)
         myfont1 = pygame.font.Font('fonts/' + config["font"], fontsize1)
+        myfont2 = pygame.font.Font('fonts/' + config["font"], fontsize2)
     except BaseException:
         myfont = pygame.font.SysFont("Roboto", fontsize)
         myfont1 = pygame.font.SysFont('Roboto', fontsize1)
+        myfont2 = pygame.font.SysFont('Roboto', fontsize2)
     try:
         backround = pygame.image.load(backroundpic)
         backround = pygame.transform.scale(
@@ -291,21 +309,40 @@ def lukemisKello():
     print(studytime)
     
     hehehahaa = timestarted + studytime * 60 - datetime.today().timestamp()
+    currdate = datetime.now().astimezone(tz).strftime('%d.%m.%Y')
+    
+    print(currdate)
     print(studytime)
     if round(timestarted + studytime * 60) == round(datetime.today().timestamp()):
         breaktime = not breaktime
-        if breaktime: breaktime_sound.play()
-        else: breaktime_end.play()
+        if breaktime: beep.play()
+        else: beep.play()
         print(breaktime)
         timestarted = datetime.today().timestamp()
     
     
-        
+
     timertime = convert(hehehahaa) 
     
     timer = myfont.render(
         str(timertime), False, tuple(map(int, config["textColor"].split(', '))))
-    screen.blit(timer, ((screen.get_width()/2 - 80 * (fontsize / 50)) / 1.25, (screen.get_height()/2.5) - 80 * (fontsize / 50)))
+    screen.blit(timer, ((screen.get_width()/2 - 80 * (fontsize / 50)) / 1.25, (screen.get_height() - 100) - 80 * (fontsize / 50)))
+    
+    pygame.draw.rect(screen, (14, 49, 56), pygame.Rect(10, 10, screen.get_width()/2, screen.get_height()/2), 0, 10)
+    #pygame.draw.rect(screen, (14, 49, 56), pygame.Rect(screen.get_width()/3, 10, screen.get_width()/4, screen.get_height()/2), 0, 10)
+    renderTextCenteredAt("Kotitehtävät", myfont2, tuple(map(int, config["textColor"].split(', '))), round(screen.get_width()//2.2 - screen.get_width()//4.5), 20, screen, round(screen.get_width()//3 - screen.get_width()//4))
+    ok = 0
+    for homework in laksyt["laksyt"]:
+        
+        if homework["aine"] in laksyt["huomisen_tunnit"]:
+            if (datetime.strptime(homework["paivamaara"], "%d.%m.%Y") - datetime.strptime(currdate, "%d.%m.%Y")).days == 0 and (datetime.strptime(homework["paivamaara"], "%d.%m.%Y") - datetime.strptime(currdate, "%d.%m.%Y")).days < 7:
+                ok += 1
+                aine = homework["aine"]
+                paivamaara = homework["paivamaara"]
+                tehtavat = homework["tehtavat"]
+                massiivisenkokoinenonisabellaporrerinjuomapullo = f"{aine}: {tehtavat} / {paivamaara}"
+                renderTextCenteredAt(massiivisenkokoinenonisabellaporrerinjuomapullo, myfont2, tuple(map(int, config["textColor"].split(', '))), round(screen.get_width()//2.2 - screen.get_width()//4.7), ok * (screen.get_height()//20 + screen.get_width()//20), screen, 600)
+                
 
 def change():
     global config, backround
@@ -360,8 +397,6 @@ while running:
             if event.key == pygame.K_RETURN:
                 change()
                 timedingdong2 = 0
-        elif event.type == pygame.VIDEORESIZE:
-            screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse = pygame.mouse.get_pos()
             if screen.get_width() / 1.10 <= mouse[0] <= screen.get_width() / 1.10 + 150 and 50 <= mouse[1] <= 150:
